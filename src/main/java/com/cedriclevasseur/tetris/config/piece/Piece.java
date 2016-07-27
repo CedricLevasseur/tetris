@@ -7,6 +7,8 @@ package com.cedriclevasseur.tetris.config.piece;
 
 import java.util.ArrayList;
 import java.util.List;
+import lombok.Data;
+import lombok.Getter;
 
 /**
  *
@@ -19,6 +21,12 @@ public class Piece {
     ArrayList<Boolean> line1=new ArrayList<>();
     ArrayList<Boolean> line2=new ArrayList<>();
     ArrayList<Boolean> line3=new ArrayList<>();
+    
+    @Getter
+    Integer height=0;
+    
+    @Getter
+    Integer width=0;
     
     
     

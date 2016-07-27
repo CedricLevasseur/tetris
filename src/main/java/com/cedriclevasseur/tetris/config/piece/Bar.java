@@ -10,10 +10,17 @@ package com.cedriclevasseur.tetris.config.piece;
  * @author cedric
  */
 public class Bar extends Piece {
+    
+
+    
+    
     public Bar(){
         super();
         line1.add(true);line1.add(true);line1.add(true);line1.add(true);
         piece.add(line1);
+        
+        height=1;
+        width=4;
     }
     
 }

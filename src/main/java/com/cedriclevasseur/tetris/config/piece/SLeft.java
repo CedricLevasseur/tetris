@@ -10,11 +10,17 @@ package com.cedriclevasseur.tetris.config.piece;
  * @author cedric
  */
 public class SLeft extends Piece {
+    
+
+    
     SLeft(){
         line1.add(false);line1.add(true);line1.add(true);
         line2.add(true);line2.add(true);line2.add(false);
         piece.add(line1);
         piece.add(line2);
+        
+        height=2;
+        width=3;    
     }
     
 }

@@ -7,6 +7,7 @@ package com.cedriclevasseur.tetris.config.piece;
 
 import com.cedriclevasseur.tetris.config.*;
 import java.util.ArrayList;
+import jdk.nashorn.internal.objects.annotations.Getter;
 
 /**
  *
@@ -15,6 +16,7 @@ import java.util.ArrayList;
 public class Square extends Piece{
     
     
+
     
     Square(){
         line1.add(true);line1.add(true);
@@ -22,6 +24,9 @@ public class Square extends Piece{
         
         piece.add(line1);
         piece.add(line2);
+        
+        height=2;
+        width=2;
     }
     
 }
