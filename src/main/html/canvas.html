@@ -7,57 +7,66 @@
     	* { padding: 0; margin: 0; }
     	canvas { background: #eee; display: block; margin: 0 auto; }
     </style>
+<script src="paper-full.js"></script>
+<script src="../resources/static/paperjs/dist/paper-full.js"></script>
 </head>
 <body>
 
-<canvas id="myCanvas" width="480" height="320"></canvas>
+<canvas id="myCanvas" resize></canvas>
 
-<script>
-	// JavaScript code goes here
+<script type="text/paperscript" canvas="myCanvas">
+var piece=drawPiece(40,40);
+piece.rotate(45);
+function drawBlock(x,y){
 
-var canvas = document.getElementById("myCanvas");
-var ctx = canvas.getContext("2d");
-var rotation=0;
-setInterval(draw, 100);
+	var colorMain="#FF0000";
+	var colorLight="#FFAA00";
+	var colorDark="#CC0000";
+	var sizeSquare = 20;
+	var sizeLight = 2; 	
+	
+	var point = new Point(x, y);
+	var size = new Size(sizeSquare, sizeSquare);
+	var path = new Path.Rectangle(point, size);
+	path.fillColor = colorMain; 
 
-function drawPiece(){
-	drawPixel(20,20);
-	drawPixel(40,20);
-	drawPixel(60,20);
-	drawPixel(40,40);
+	var point = new Point(x, y);
+	var size = new Size(sizeLight, sizeSquare);
+	var path2 = new Path.Rectangle(point, size);
+	path2.fillColor = colorLight;
+
+	var point = new Point(x+sizeSquare-sizeLight, y);
+	var size = new Size(sizeLight,sizeSquare);
+	var path4 = new Path.Rectangle(point, size);
+	path4.fillColor = colorDark;
+
+	var point = new Point(x, y);
+	var size = new Size(sizeSquare,sizeLight);
+	var path3 = new Path.Rectangle(point, size);
+	path3.fillColor = colorLight;
+
+	var point = new Point(x, y+sizeSquare-sizeLight);
+	var size = new Size(sizeSquare,sizeLight);
+	var path5 = new Path.Rectangle(point, size);
+	path5.fillColor = colorDark;
+
+	var block = new Group({
+	    children: [path, path2, path3, path4, path5] 
+	});
+	return block;
 }
 
-function drawPixel(x,y){
-	ctx.beginPath();
-	//ctx.translate(50,40);
-	//ctx.rotate(rotation);
-	ctx.rect(x, y, 20, 20);
-	ctx.fillStyle = "#FF0000";
-	ctx.fill();
-	ctx.fillStyle = "#AA0000";
-	ctx.strokeRect(x,y,20,20)
-	ctx.closePath();
+function drawPiece(x,y){
+	var b1=drawBlock(20,20);
+	var b2=drawBlock(40,20);
+	var b3=drawBlock(60,20);
+	var b4=drawBlock(40,40);
 
+	var piece=new Group({
+		children:[b1,b2,b3,b4]
+	});
+	return piece;
 }
-function  drawCircle(x,y){
-	ctx.beginPath();
-	ctx.arc(x, y, 3, 0, 2 * Math.PI);
-	ctx.stroke();
-}
-
-
-function draw(){
-	rotation+=1;
-	ctx.clearRect(0, 0, 480, 320);
-	//ctx.translate(480/2, 320/2);
-	//ctx.translate(50,40);
-	ctx.rotate(Math.PI / 180 *5 );
-	drawPiece();
-	drawCircle(50,40);
-	//ctx.translate(50,40);
-}
-
 </script>
-
 </body>
 </html>
