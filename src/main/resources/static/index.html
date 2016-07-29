@@ -7,8 +7,31 @@
     	* { padding: 0; margin: 0; }
     	canvas { background: #eee; display: block; margin: 0 auto; }
     </style>
-<script src="paper-full.js"></script>
-<script src="../resources/static/paperjs/dist/paper-full.js"></script>
+
+<script src="paperjs/dist/paper-full.js"></script>
+<script type="text/javascript">
+    function getJSONP(url, success) {
+
+    var ud = '_' + +new Date,
+        script = document.createElement('script'),
+        head = document.getElementsByTagName('head')[0] 
+               || document.documentElement;
+
+    window[ud] = function(data) {
+        head.removeChild(script);
+        success && success(data);
+    };
+
+    script.src = url.replace('callback=?', 'callback=' + ud);
+    head.appendChild(script);
+
+}
+
+getJSONP('/config', function(data){
+    console.log(data);
+}); 
+    
+</script>
 </head>
 <body>
 
@@ -16,7 +39,14 @@
 
 <script type="text/paperscript" canvas="myCanvas">
 var piece=drawPiece(40,40);
-piece.rotate(45);
+
+
+
+
+var angle=1;
+setInterval(r,10);
+function r(){piece.rotate(angle)}
+
 function drawBlock(x,y){
 
 	var colorMain="#FF0000";
