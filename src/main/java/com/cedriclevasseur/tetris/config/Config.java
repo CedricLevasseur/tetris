@@ -22,6 +22,8 @@ public @Data class Config {
   
     private Integer gridWidth=30;
     
+    private Integer sizeBlock=20;
+    
     private Piece piece = new Bar();
     
     private List<Piece> listOfPiece= Piece.getListOfPiece(); 

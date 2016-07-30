@@ -60,6 +60,10 @@ public class Piece {
         }
     return toReturn;
     }
+    
+    public List getData(){
+    return piece;
+    }
  
     public String getMe(){
         return toString();

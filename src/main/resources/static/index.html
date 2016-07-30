@@ -10,27 +10,33 @@
 
 <script src="paperjs/dist/paper-full.js"></script>
 <script type="text/javascript">
-    function getJSONP(url, success) {
 
-    var ud = '_' + +new Date,
-        script = document.createElement('script'),
-        head = document.getElementsByTagName('head')[0] 
-               || document.documentElement;
+ function loadJSON(callback) {   
 
-    window[ud] = function(data) {
-        head.removeChild(script);
-        success && success(data);
-    };
+    var xobj = new XMLHttpRequest();
+        xobj.overrideMimeType("application/json");
+    xobj.open('GET', '/config', false); 
+    xobj.onreadystatechange = function () {
+          if (xobj.readyState == 4 && xobj.status == "200") {
+            // Required use of an anonymous callback as .open will NOT return a value but simply returns undefined in asynchronous mode
+            callback(xobj.responseText);
+          }
+    };  
+    xobj.send(null);
 
-    script.src = url.replace('callback=?', 'callback=' + ud);
-    head.appendChild(script);
+ }
 
+function loadConfig() {
+ loadJSON(function(response) {
+  // Parse JSON string into object
+    myConfig = JSON.parse(response);
+    console.log("myConfig is loaded");
+ });
 }
-
-getJSONP('/config', function(data){
-    console.log(data);
-}); 
-    
+var myConfig = {} ;
+//myConfig will be global 
+loadConfig();
+console.log("piece.name="+myConfig.piece.name);
 </script>
 </head>
 <body>
@@ -38,45 +44,41 @@ getJSONP('/config', function(data){
 <canvas id="myCanvas" resize></canvas>
 
 <script type="text/paperscript" canvas="myCanvas">
-var piece=drawPiece(40,40);
-
-
-
+var piece=drawPiece(40,40,myConfig.piece);
 
 var angle=1;
 setInterval(r,10);
-function r(){piece.rotate(angle)}
+function r(){piece.rotate(angle);}
 
 function drawBlock(x,y){
 
 	var colorMain="#FF0000";
 	var colorLight="#FFAA00";
 	var colorDark="#CC0000";
-	var sizeSquare = 20;
-	var sizeLight = 2; 	
+	var sizeLight = myConfig.sizeBlock/10; 	
 	
 	var point = new Point(x, y);
-	var size = new Size(sizeSquare, sizeSquare);
+	var size = new Size(myConfig.sizeBlock, myConfig.sizeBlock);
 	var path = new Path.Rectangle(point, size);
 	path.fillColor = colorMain; 
 
 	var point = new Point(x, y);
-	var size = new Size(sizeLight, sizeSquare);
+	var size = new Size(sizeLight, myConfig.sizeBlock);
 	var path2 = new Path.Rectangle(point, size);
 	path2.fillColor = colorLight;
 
-	var point = new Point(x+sizeSquare-sizeLight, y);
-	var size = new Size(sizeLight,sizeSquare);
+	var point = new Point(x+myConfig.sizeBlock-sizeLight, y);
+	var size = new Size(sizeLight,myConfig.sizeBlock);
 	var path4 = new Path.Rectangle(point, size);
 	path4.fillColor = colorDark;
 
 	var point = new Point(x, y);
-	var size = new Size(sizeSquare,sizeLight);
+	var size = new Size(myConfig.sizeBlock,sizeLight);
 	var path3 = new Path.Rectangle(point, size);
 	path3.fillColor = colorLight;
 
-	var point = new Point(x, y+sizeSquare-sizeLight);
-	var size = new Size(sizeSquare,sizeLight);
+	var point = new Point(x, y+myConfig.sizeBlock-sizeLight);
+	var size = new Size(myConfig.sizeBlock,sizeLight);
 	var path5 = new Path.Rectangle(point, size);
 	path5.fillColor = colorDark;
 
@@ -86,17 +88,29 @@ function drawBlock(x,y){
 	return block;
 }
 
-function drawPiece(x,y){
-	var b1=drawBlock(20,20);
-	var b2=drawBlock(40,20);
-	var b3=drawBlock(60,20);
-	var b4=drawBlock(40,40);
 
+function drawPiece(x,y,pieceData ){
+    var blocPresence=0;
+    var arrayOfBlock = [];
+    for(i=0;i<pieceData.height;i++){
+        for(j=0;j<pieceData.width;j++){
+            blocPresence=pieceData.data[i][j];
+            console.log("blocPresence["+i+"]["+j+"]="+blocPresence);
+            if(blocPresence==true){
+                var block=drawBlock(x,y);
+                arrayOfBlock.push(block);
+            }
+            x=+myConfig.sizeBlock;
+        }
+        y+=myConfig.sizeBlock;
 	var piece=new Group({
-		children:[b1,b2,b3,b4]
+		children:arrayOfBlock
 	});
 	return piece;
+    }
 }
+
+
 </script>
 </body>
 </html>
