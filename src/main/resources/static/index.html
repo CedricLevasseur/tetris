@@ -56,35 +56,37 @@ function drawBlock(x,y){
 	var colorLight="#FFAA00";
 	var colorDark="#CC0000";
 	var sizeLight = myConfig.sizeBlock/10; 	
+        var point, size;
 	
-	var point = new Point(x, y);
-	var size = new Size(myConfig.sizeBlock, myConfig.sizeBlock);
-	var path = new Path.Rectangle(point, size);
-	path.fillColor = colorMain; 
+	point = new Point(x, y);
+	size = new Size(myConfig.sizeBlock, myConfig.sizeBlock);
+	var path1 = new Path.Rectangle(point, size);
+	path1.fillColor = colorMain; 
 
-	var point = new Point(x, y);
-	var size = new Size(sizeLight, myConfig.sizeBlock);
+	point = new Point(x, y);
+	size = new Size(sizeLight, myConfig.sizeBlock);
 	var path2 = new Path.Rectangle(point, size);
 	path2.fillColor = colorLight;
 
-	var point = new Point(x+myConfig.sizeBlock-sizeLight, y);
-	var size = new Size(sizeLight,myConfig.sizeBlock);
+	point = new Point(x+myConfig.sizeBlock-sizeLight, y);
+	size = new Size(sizeLight,myConfig.sizeBlock);
 	var path4 = new Path.Rectangle(point, size);
 	path4.fillColor = colorDark;
 
-	var point = new Point(x, y);
-	var size = new Size(myConfig.sizeBlock,sizeLight);
+	point = new Point(x, y);
+	size = new Size(myConfig.sizeBlock,sizeLight);
 	var path3 = new Path.Rectangle(point, size);
 	path3.fillColor = colorLight;
 
-	var point = new Point(x, y+myConfig.sizeBlock-sizeLight);
-	var size = new Size(myConfig.sizeBlock,sizeLight);
+	point = new Point(x, y+myConfig.sizeBlock-sizeLight);
+	size = new Size(myConfig.sizeBlock,sizeLight);
 	var path5 = new Path.Rectangle(point, size);
 	path5.fillColor = colorDark;
 
 	var block = new Group({
-	    children: [path, path2, path3, path4, path5] 
+	    children: [path1, path2, path3, path4, path5] 
 	});
+        console.log("bloc drawn at x="+x+", y="+y);
 	return block;
 }
 
@@ -92,22 +94,27 @@ function drawBlock(x,y){
 function drawPiece(x,y,pieceData ){
     var blocPresence=0;
     var arrayOfBlock = [];
-    for(i=0;i<pieceData.height;i++){
-        for(j=0;j<pieceData.width;j++){
+    var block;
+    for(var i=0;i<pieceData.height;i++){
+        for(var j=0;j<pieceData.width;j++){
+            console.log("x="+x+",y="+y);
             blocPresence=pieceData.data[i][j];
             console.log("blocPresence["+i+"]["+j+"]="+blocPresence);
             if(blocPresence==true){
-                var block=drawBlock(x,y);
+                block=drawBlock(x,y);
                 arrayOfBlock.push(block);
             }
-            x=+myConfig.sizeBlock;
+            console.log("-> x="+x+",y="+y+",myConfig.sizeBlock="+myConfig.sizeBlock);
+            x+=myConfig.sizeBlock;
+            console.log("-» x="+x+",y="+y);
         }
         y+=myConfig.sizeBlock;
-	var piece=new Group({
-		children:arrayOfBlock
-	});
-	return piece;
     }
+    var piece=new Group({
+            children:arrayOfBlock
+    });
+    return piece;
+
 }
 
 
