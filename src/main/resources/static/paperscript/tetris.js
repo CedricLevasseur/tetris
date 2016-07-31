@@ -42,11 +42,11 @@ function drawPiece(x, y, pieceData) {
     var blocPresence = 0;
     var arrayOfBlock = [];
     var block;
-    for (var i = 0; i < pieceData.height; i++) {
-        for (var j = 0; j < pieceData.width; j++) {
-            console.log("i=" + x + ",j=" + y);
+    for (var lines = 0; lines < pieceData.height; lines++) {
+        for (var rows = 0; rows < pieceData.width; rows++) {
+            console.log("lines=" + lines + ",rows=" + rows);
             console.log("x=" + x + ",y=" + y);
-            blocPresence = pieceData.data[i][j];
+            blocPresence = pieceData.data[lines][rows];
             if (blocPresence === true) {
                 block = drawBlock(x, y);
                 arrayOfBlock.push(block);
