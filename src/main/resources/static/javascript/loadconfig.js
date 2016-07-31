@@ -15,5 +15,5 @@ function loadConfig() {
 }
 
 loadConfig();
-console.log("myConfig is loaded :" + myConfig !== undefined);
+console.log("myConfig is loaded :" + (myConfig !== undefined).toString());
 

@@ -65,7 +65,7 @@ function drawPiece(x, y, pieceData) {
 
 }
 
-console.log("myConfig is present in global scope :" + myConfig!==undefined);
+console.log("myConfig is present in global scope :" + (myConfig!==undefined).toString());
 
 var piece = drawPiece(40, 40, myConfig.listOfPiece[getRandomInt(0,myConfig.listOfPiece.length)]);
 
