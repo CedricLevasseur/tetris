@@ -27,14 +27,8 @@ public @Data class Config {
     
     private Integer sizeBlock=20;
     
-    private List<Color> listOfColor= new ArrayList<>();
+    private List<Color> listOfColor= Color.getListOfColor();
     
     private List<Piece> listOfPiece= Piece.getListOfPiece(); 
     
-   public Config(){
-       listOfColor.add(new Blue());
-       listOfColor.add(new Red());
-       listOfColor.add(new Grey());
-       listOfColor.add(new Green());
-   }
 }

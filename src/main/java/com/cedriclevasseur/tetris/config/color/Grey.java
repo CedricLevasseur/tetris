@@ -6,7 +6,7 @@ import lombok.Data;
  *
  * @author cedric
  */
-public @Data class Grey implements Color {
+public @Data class Grey extends Color {
 
     String colorMain = "#AAAAAA";
     String colorLight = "#000000";
