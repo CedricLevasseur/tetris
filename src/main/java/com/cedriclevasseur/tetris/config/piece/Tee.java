@@ -17,6 +17,9 @@ public class Tee extends Piece {
         line2.add(false);line2.add(true);
         piece.add(line1);
         piece.add(line2);
+        
+        height=2;
+        width=3;
     }
     
 }
