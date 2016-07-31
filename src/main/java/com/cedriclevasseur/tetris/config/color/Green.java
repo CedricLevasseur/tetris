@@ -9,6 +9,6 @@ import lombok.Data;
 public @Data class Green extends Color {
 
     String colorMain = "#00FF00";
-    String colorLight = "#00FFAA";
+    String colorLight = "#AAFFAA";
     String colorDark = "#00CC00";
 }
