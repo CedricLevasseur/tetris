@@ -5,9 +5,12 @@
  */
 package com.cedriclevasseur.tetris.config;
 
-import com.cedriclevasseur.tetris.config.piece.Bar;
+import com.cedriclevasseur.tetris.config.color.Blue;
+import com.cedriclevasseur.tetris.config.color.Color;
+import com.cedriclevasseur.tetris.config.color.Green;
+import com.cedriclevasseur.tetris.config.color.Grey;
+import com.cedriclevasseur.tetris.config.color.Red;
 import com.cedriclevasseur.tetris.config.piece.Piece;
-import com.cedriclevasseur.tetris.config.piece.Square;
 import java.util.ArrayList;
 import java.util.List;
 import lombok.Data;
@@ -24,9 +27,14 @@ public @Data class Config {
     
     private Integer sizeBlock=20;
     
-    private Piece piece = new Bar();
+    private List<Color> listOfColor= new ArrayList<>();
     
     private List<Piece> listOfPiece= Piece.getListOfPiece(); 
     
-   
+   public Config(){
+       listOfColor.add(new Blue());
+       listOfColor.add(new Red());
+       listOfColor.add(new Grey());
+       listOfColor.add(new Green());
+   }
 }
