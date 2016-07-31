@@ -1,8 +1,10 @@
-function drawBlock(x, y) {
+/* global myConfig */
 
-    var colorMain = "#FF0000";
-    var colorLight = "#FFAA00";
-    var colorDark = "#CC0000";
+function drawBlock(x, y, colorIdx) {
+console.log("drawBlock colorIdx="+colorIdx);
+    var colorMain = myConfig.listOfColor[colorIdx].colorMain;
+    var colorLight = myConfig.listOfColor[colorIdx].colorLight;
+    var colorDark = myConfig.listOfColor[colorIdx].colorDark;
     var sizeLight = myConfig.sizeBlock / 10;
     var point, size;
 
@@ -43,14 +45,17 @@ function drawPiece(x, y, pieceData) {
     var blocPresence = 0;
     var arrayOfBlock = [];
     var block;
+    var colorIdx = getRandomInt(0,myConfig.listOfColor.length);
     console.log(pieceData.name);
+    console.log("colorIdx="+colorIdx);
+    
     for (var lines = 0; lines < pieceData.height; lines++) {
         for (var rows = 0; rows < pieceData.width; rows++) {
             console.log("lines=" + lines + ",rows=" + rows);
             console.log("x=" + x + ",y=" + y);
             blocPresence = pieceData.data[lines][rows];
             if (blocPresence === true) {
-                block = drawBlock(x, y);
+                block = drawBlock(x, y,colorIdx);
                 arrayOfBlock.push(block);
             }
             x += myConfig.sizeBlock;
@@ -66,9 +71,7 @@ function drawPiece(x, y, pieceData) {
 }
 
 console.log("myConfig is present in global scope :" + myConfig!==undefined);
-function getRandomInt(min, max) {
-  return Math.floor(Math.random() * (max - min)) + min;
-}
+
 var piece = drawPiece(40, 40, myConfig.listOfPiece[getRandomInt(0,myConfig.listOfPiece.length)]);
 
 
