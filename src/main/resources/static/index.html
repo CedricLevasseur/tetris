@@ -9,115 +9,12 @@
     </style>
 
 <script src="paperjs/dist/paper-full.js"></script>
-<script type="text/javascript">
-
- function loadJSON(callback) {   
-
-    var xobj = new XMLHttpRequest();
-        xobj.overrideMimeType("application/json");
-    xobj.open('GET', '/config', false); 
-    xobj.onreadystatechange = function () {
-          if (xobj.readyState == 4 && xobj.status == "200") {
-            // Required use of an anonymous callback as .open will NOT return a value but simply returns undefined in asynchronous mode
-            callback(xobj.responseText);
-          }
-    };  
-    xobj.send(null);
-
- }
-
-function loadConfig() {
- loadJSON(function(response) {
-  // Parse JSON string into object
-    myConfig = JSON.parse(response);
-    console.log("myConfig is loaded");
- });
-}
-var myConfig = {} ;
-//myConfig will be global 
-loadConfig();
-console.log("piece.name="+myConfig.piece.name);
-</script>
+<script type="text/javascript" src="javascript/loadconfig.js"></script>
 </head>
 <body>
 
 <canvas id="myCanvas" resize></canvas>
 
-<script type="text/paperscript" canvas="myCanvas">
-var piece=drawPiece(40,40,myConfig.piece);
-
-var angle=1;
-setInterval(r,10);
-function r(){piece.rotate(angle);}
-
-function drawBlock(x,y){
-
-	var colorMain="#FF0000";
-	var colorLight="#FFAA00";
-	var colorDark="#CC0000";
-	var sizeLight = myConfig.sizeBlock/10; 	
-        var point, size;
-	
-	point = new Point(x, y);
-	size = new Size(myConfig.sizeBlock, myConfig.sizeBlock);
-	var path1 = new Path.Rectangle(point, size);
-	path1.fillColor = colorMain; 
-
-	point = new Point(x, y);
-	size = new Size(sizeLight, myConfig.sizeBlock);
-	var path2 = new Path.Rectangle(point, size);
-	path2.fillColor = colorLight;
-
-	point = new Point(x+myConfig.sizeBlock-sizeLight, y);
-	size = new Size(sizeLight,myConfig.sizeBlock);
-	var path4 = new Path.Rectangle(point, size);
-	path4.fillColor = colorDark;
-
-	point = new Point(x, y);
-	size = new Size(myConfig.sizeBlock,sizeLight);
-	var path3 = new Path.Rectangle(point, size);
-	path3.fillColor = colorLight;
-
-	point = new Point(x, y+myConfig.sizeBlock-sizeLight);
-	size = new Size(myConfig.sizeBlock,sizeLight);
-	var path5 = new Path.Rectangle(point, size);
-	path5.fillColor = colorDark;
-
-	var block = new Group({
-	    children: [path1, path2, path3, path4, path5] 
-	});
-        console.log("bloc drawn at x="+x+", y="+y);
-	return block;
-}
-
-
-function drawPiece(x,y,pieceData ){
-    var blocPresence=0;
-    var arrayOfBlock = [];
-    var block;
-    for(var i=0;i<pieceData.height;i++){
-        for(var j=0;j<pieceData.width;j++){
-            console.log("x="+x+",y="+y);
-            blocPresence=pieceData.data[i][j];
-            console.log("blocPresence["+i+"]["+j+"]="+blocPresence);
-            if(blocPresence==true){
-                block=drawBlock(x,y);
-                arrayOfBlock.push(block);
-            }
-            console.log("-> x="+x+",y="+y+",myConfig.sizeBlock="+myConfig.sizeBlock);
-            x+=myConfig.sizeBlock;
-            console.log("-» x="+x+",y="+y);
-        }
-        y+=myConfig.sizeBlock;
-    }
-    var piece=new Group({
-            children:arrayOfBlock
-    });
-    return piece;
-
-}
-
-
-</script>
+<script type="text/paperscript" canvas="myCanvas" src="paperscript/tetris.js"></script>
 </body>
 </html>
