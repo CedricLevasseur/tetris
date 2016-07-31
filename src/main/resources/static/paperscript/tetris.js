@@ -39,9 +39,11 @@ function drawBlock(x, y) {
 
 
 function drawPiece(x, y, pieceData) {
+    var xInitial=x;
     var blocPresence = 0;
     var arrayOfBlock = [];
     var block;
+    console.log(pieceData.name);
     for (var lines = 0; lines < pieceData.height; lines++) {
         for (var rows = 0; rows < pieceData.width; rows++) {
             console.log("lines=" + lines + ",rows=" + rows);
@@ -53,6 +55,7 @@ function drawPiece(x, y, pieceData) {
             }
             x += myConfig.sizeBlock;
         }
+        x=xInitial;
         y += myConfig.sizeBlock;
     }
     var piece = new Group({
