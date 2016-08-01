@@ -1,4 +1,10 @@
-/* global myConfig */
+var ROTATION_SPEED = 5;
+var FALLING_SPEED=0.25;
+var angle = 0;
+var rotation = 0;
+var position = 0;
+var linesCompleted = 0;
+var piece;
 
 function drawBlock(x, y, colorIdx) {
     var colorMain = myConfig.listOfColor[colorIdx].colorMain;
@@ -64,17 +70,74 @@ function drawPiece(x, y, pieceData) {
     return piece;
 
 }
+function fallPiece(){
+    piece.translate(new Point(0,FALLING_SPEED));
+}
+
+function move(direction){
+    if(direction==="left"){
+        piece.translate(new Point(-myConfig.sizeBlock,0));
+    }
+    if(direction==="right"){
+        piece.translate(new Point(myConfig.sizeBlock,0));
+    }
+    
+}
+
+
+function rotatePiece() {
+    angle=angle+rotation;
+    piece.rotate(rotation);
+    if(angle>359){
+        angle-=360;
+    }
+    if(angle<0){
+        angle+=360;
+    }
+    if((angle===0)||(angle===90)||(angle===180)||(angle===270)){
+        rotation=0;
+    }
+
+}
+// Create a centered text item at the center of the view:
+var text = new PointText({
+	point: view.top,
+	content: 'lines completed : '+linesCompleted,
+	justification: 'center',
+	fontSize: 15
+});
+
+function onKeyDown(event) {
+        if(event.key==="down"){
+            console.log("rotate-left");
+            rotation=-ROTATION_SPEED;
+        }
+        if(event.key==="up"){
+            console.log("rotate-right");
+            rotation=ROTATION_SPEED;
+        }
+        if(event.key==="space"){
+            console.log("down");
+            console.log("To be implemented");
+        }
+        if(event.key==="left"){
+            console.log("move-left");
+            move("left");
+        }
+        if(event.key==="right"){
+            console.log("move-right");
+            move("right");
+        }
+}
 
 console.log("myConfig is present in global scope :" + (myConfig!==undefined).toString());
 
-var piece = drawPiece(40, 40, myConfig.listOfPiece[getRandomInt(0,myConfig.listOfPiece.length)]);
+piece = drawPiece(40, 40, myConfig.listOfPiece[getRandomInt(0,myConfig.listOfPiece.length)]);
 
-var angle = 1;
-function r() {
-    piece.rotate(angle);
-}
-setInterval(r, 10);
 
+
+setInterval(rotatePiece, 10);
+setInterval(fallPiece, 10);
 
 
 
