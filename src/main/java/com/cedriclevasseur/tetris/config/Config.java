@@ -21,9 +21,9 @@ import lombok.Data;
  */
 public @Data class Config {
 
-    private Integer gridHeight=100;   
+    private Integer gridHeight=600;   
   
-    private Integer gridWidth=30;
+    private Integer gridWidth=400;
     
     private Integer sizeBlock=20;
     

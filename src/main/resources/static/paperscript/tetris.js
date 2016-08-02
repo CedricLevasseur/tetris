@@ -68,22 +68,41 @@ function drawPiece(x, y, pieceData) {
         children: arrayOfBlock
     });
     return piece;
-
 }
+
+// Create a centered text item at the center of the view:
+var text = new PointText({
+	point: view.center,
+	content: 'lines completed : '+linesCompleted+'\nposition:'+(piece!==undefined?piece.position.y:"undefined"),
+	justification: 'center',
+	fontSize: 15
+});
+
+
 function fallPiece(){
-    piece.translate(new Point(0,FALLING_SPEED));
+    if((piece!==undefined)&&(piece.position.y<myConfig.gridHeight)){
+        piece.translate(new Point(0,FALLING_SPEED));        
+    }else{
+        piece = drawPiece(0, 0, myConfig.listOfPiece[getRandomInt(0,myConfig.listOfPiece.length)]);
+    }
+    // Create a centered text item at the center of the view:
+    text.content='lines completed : '+linesCompleted+'\nposition:'+(piece!==undefined?piece.position.y:"undefined");
+
 }
 
 function move(direction){
     if(direction==="left"){
-        piece.translate(new Point(-myConfig.sizeBlock,0));
+        if(piece.position.x>myConfig.sizeBlock){
+            piece.translate(new Point(-myConfig.sizeBlock,0));
+        }
     }
     if(direction==="right"){
-        piece.translate(new Point(myConfig.sizeBlock,0));
+        if(piece.position.x<=myConfig.gridWidth-myConfig.sizeBlock){
+            piece.translate(new Point(myConfig.sizeBlock,0));
+        }
     }
     
 }
-
 
 function rotatePiece() {
     angle=angle+rotation;
@@ -99,13 +118,6 @@ function rotatePiece() {
     }
 
 }
-// Create a centered text item at the center of the view:
-var text = new PointText({
-	point: view.top,
-	content: 'lines completed : '+linesCompleted,
-	justification: 'center',
-	fontSize: 15
-});
 
 function onKeyDown(event) {
         if(event.key==="down"){
@@ -132,7 +144,7 @@ function onKeyDown(event) {
 
 console.log("myConfig is present in global scope :" + (myConfig!==undefined).toString());
 
-piece = drawPiece(40, 40, myConfig.listOfPiece[getRandomInt(0,myConfig.listOfPiece.length)]);
+//piece = drawPiece(40, 40, myConfig.listOfPiece[getRandomInt(0,myConfig.listOfPiece.length)]);
 
 
 
