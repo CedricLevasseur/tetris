@@ -15,7 +15,10 @@ import jdk.nashorn.internal.objects.annotations.Getter;
  */
 public class Square extends Piece{
     
-    
+
+    Integer pivotX=1;
+
+    Integer pivotY=1;
 
     
     Square(){

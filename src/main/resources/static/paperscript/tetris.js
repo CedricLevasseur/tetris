@@ -64,9 +64,13 @@ function drawPiece(x, y, pieceData) {
         x=xInitial;
         y += myConfig.sizeBlock;
     }
+    var pivot = new Path.Circle(new Point(pieceData.pivotX*myConfig.sizeBlock, pieceData.pivotY*myConfig.sizeBlock), 5);
+    pivot.fillColor = 'black';
+    arrayOfBlock.push(pivot);
     var piece = new Group({
         children: arrayOfBlock
     });
+    piece.pivot=new Point(pieceData.pivotX*myConfig.sizeBlock, pieceData.pivotY*myConfig.sizeBlock);
     return piece;
 }
 
@@ -78,16 +82,19 @@ var text = new PointText({
 	fontSize: 15
 });
 
-
+var bottomPointY;
 function fallPiece(){
-    if((piece!==undefined)&&(piece.position.y<myConfig.gridHeight)){
-        piece.translate(new Point(0,FALLING_SPEED));        
+    if(piece!==undefined){
+        bottomPointY = Math.max.apply(Math, [ piece.bounds.bottomLeft.y, piece.bounds.bottomRight.y, piece.bounds.topLeft.y, piece.bounds.topRight.y ]) ;
+    }
+    if((piece!==undefined)&&( bottomPointY <myConfig.gridHeight)){
+            piece.translate(new Point(0,FALLING_SPEED));        
     }else{
         piece = drawPiece(0, 0, myConfig.listOfPiece[getRandomInt(0,myConfig.listOfPiece.length)]);
     }
     // Create a centered text item at the center of the view:
+    //text.content='lines completed : '+linesCompleted+'\nposition:'+(piece!==undefined?piece.position.y:"undefined")+ "\nbottomPosition:"+(piece!==undefined?piece.bottomLeft.y:"undefined");
     text.content='lines completed : '+linesCompleted+'\nposition:'+(piece!==undefined?piece.position.y:"undefined");
-
 }
 
 function move(direction){
@@ -116,8 +123,10 @@ function rotatePiece() {
     if((angle===0)||(angle===90)||(angle===180)||(angle===270)){
         rotation=0;
     }
-
 }
+
+
+
 
 function onKeyDown(event) {
         if(event.key==="down"){

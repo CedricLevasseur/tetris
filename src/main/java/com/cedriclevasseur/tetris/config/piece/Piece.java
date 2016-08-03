@@ -27,7 +27,12 @@ public class Piece {
     
     @Getter
     Integer width=0;
-    
+
+    @Getter
+    Integer pivotX=2;
+
+    @Getter
+    Integer pivotY=1;
     
     
     public static List<Piece> getListOfPiece(){
