@@ -9,6 +9,7 @@ import com.cedriclevasseur.tetris.config.*;
 import java.util.ArrayList;
 import jdk.nashorn.internal.objects.annotations.Getter;
 
+
 /**
  *
  * @author cedric
@@ -16,9 +17,7 @@ import jdk.nashorn.internal.objects.annotations.Getter;
 public class Square extends Piece{
     
 
-    Integer pivotX=1;
 
-    Integer pivotY=1;
 
     
     Square(){
@@ -30,6 +29,9 @@ public class Square extends Piece{
         
         height=2;
         width=2;
+        
+        pivotX=1;
+        pivotY=1;
     }
     
 }
