@@ -54,6 +54,7 @@ function drawBlock(x, y, colorIdx) {
  */
 function drawPiece(x, y, pieceConfig) {
     var xInitial=x;
+    var yInitial=y;
     var blocPresence = 0;
     var arrayOfBlock = [];
     var block;
@@ -74,6 +75,9 @@ function drawPiece(x, y, pieceConfig) {
     var pivot = new Path.Circle(new Point(pieceConfig.pivotX*myConfig.sizeBlock, pieceConfig.pivotY*myConfig.sizeBlock), 5);
     pivot.fillColor = 'black';
     arrayOfBlock.push(pivot);
+    var upperLeft = new Path.Circle(new Point(xInitial,yInitial), 5);
+    upperLeft.fillColor = 'red';
+    arrayOfBlock.push(upperLeft);
     var piece = new Group({
         children: arrayOfBlock
     });
@@ -102,7 +106,7 @@ function fallPiece(){
     }
     // Create a centered text item at the center of the view:
     //text.content='lines completed : '+linesCompleted+'\nposition:'+(piece!==undefined?piece.position.y:"undefined")+ "\nbottomPosition:"+(piece!==undefined?piece.bottomLeft.y:"undefined");
-    text.content='lines completed : '+linesCompleted+'\nfallingSpeed='+fallingSpeed+'\nposition:'+(piece!==undefined?piece.position.y:"undefined");
+    text.content='lines completed : '+linesCompleted+'\nfallingSpeed='+fallingSpeed+'\npositionX:'+(piece!==undefined?piece.position.x:"undefined") +'\npositionY:'+(piece!==undefined?piece.position.y:"undefined" );
 }
 
 function move(direction){
