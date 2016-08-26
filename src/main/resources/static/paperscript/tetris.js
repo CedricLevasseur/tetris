@@ -45,6 +45,39 @@ function drawBlock(x, y, colorIdx) {
     return block;
 }
 
+
+function getUpperLeftX(piece) {
+    var x = Math.min.apply(Math, [ piece.bounds.topLeft.x, piece.bounds.topRight.x, piece.bounds.bottomLeft.x, piece.bounds.bottomRight.x ]) ;
+    console.log("getUpperLeftX="+x);
+    return x;
+}
+
+function getUpperLeftY(piece) {
+    var y=  Math.min.apply(Math, [ piece.bounds.topLeft.y, piece.bounds.topRight.y, piece.bounds.bottomLeft.y, piece.bounds.bottomRight.y ]) ;
+    console.log("getUpperLeftY="+y);
+    return y;
+}
+
+function getUpperRightX(piece) {
+    var x=Math.max.apply(Math, [ piece.bounds.topLeft.x, piece.bounds.topRight.x, piece.bounds.bottomLeft.x, piece.bounds.bottomRight.x ]) ;
+    console.log("getUpperRightX="+x);
+    return y;
+}
+
+function getUpperRightY(piece) {
+    var y=Math.max.apply(Math, [ piece.bounds.topLeft.y, piece.bounds.topRight.y, piece.bounds.bottomLeft.y, piece.bounds.bottomRight.y ]) ;
+    console.log("getUpperRightY="+y);
+    return y;
+}
+
+
+function drawUpperLeftPoint(piece){
+    var upperLeft = new Path.Circle(new Point(getUpperLeftX(piece),getUpperLeftY(piece)), 5);
+    upperLeft.fillColor = 'red';
+    piece.children.push(upperLeft);
+}
+
+
 /**
  * Draw a piece with drawBlock from a schema coming from pieceConfig 
  * @param {type} x 
@@ -75,15 +108,15 @@ function drawPiece(x, y, pieceConfig) {
     var pivot = new Path.Circle(new Point(pieceConfig.pivotX*myConfig.sizeBlock, pieceConfig.pivotY*myConfig.sizeBlock), 5);
     pivot.fillColor = 'black';
     arrayOfBlock.push(pivot);
-    var upperLeft = new Path.Circle(new Point(xInitial,yInitial), 5);
-    upperLeft.fillColor = 'red';
-    arrayOfBlock.push(upperLeft);
     var piece = new Group({
         children: arrayOfBlock
     });
-    piece.pivot=new Point(pieceConfig.pivotX*myConfig.sizeBlock, pieceConfig.pivotY*myConfig.sizeBlock);
+    //piece.pivot=new Point(pieceConfig.pivotX*myConfig.sizeBlock, pieceConfig.pivotY*myConfig.sizeBlock);
     return piece;
 }
+
+
+
 
 // Create a centered text item at the center of the view:
 var text = new PointText({
@@ -103,6 +136,7 @@ function fallPiece(){
             piece.translate(new Point(0,fallingSpeed));        
     }else{
         piece = drawPiece(0, 0, myConfig.listOfPiece[getRandomInt(0,myConfig.listOfPiece.length)]);
+        piece = drawUpperLeftPoint(piece);
     }
     // Create a centered text item at the center of the view:
     //text.content='lines completed : '+linesCompleted+'\nposition:'+(piece!==undefined?piece.position.y:"undefined")+ "\nbottomPosition:"+(piece!==undefined?piece.bottomLeft.y:"undefined");
@@ -111,12 +145,12 @@ function fallPiece(){
 
 function move(direction){
     if(direction==="left"){
-        if(piece.position.x>myConfig.sizeBlock){
+        if(getUpperLeftX(piece)>myConfig.sizeBlock){
             piece.translate(new Point(-myConfig.sizeBlock,0));
         }
     }
     if(direction==="right"){
-        if(piece.position.x<=myConfig.gridWidth-myConfig.sizeBlock){
+        if(getUpperRightX(piece)<=myConfig.gridWidth-myConfig.sizeBlock){
             piece.translate(new Point(myConfig.sizeBlock,0));
         }
     }
