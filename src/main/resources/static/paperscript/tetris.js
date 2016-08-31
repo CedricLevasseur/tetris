@@ -108,9 +108,9 @@ function drawPiece(x, y, pieceConfig) {
         x=xInitial;
         y += myConfig.sizeBlock;
     }
-    var pivot = new Path.Circle(new Point(pieceConfig.pivotX*myConfig.sizeBlock, pieceConfig.pivotY*myConfig.sizeBlock), 5);
-    pivot.fillColor = 'black';
-    arrayOfBlock.push(pivot);
+//    var pivot = new Path.Circle(new Point(pieceConfig.pivotX*myConfig.sizeBlock, pieceConfig.pivotY*myConfig.sizeBlock), 5);
+//    pivot.fillColor = 'black';
+//    arrayOfBlock.push(pivot);
     var piece = new Group({
         children: arrayOfBlock
     });
@@ -139,11 +139,11 @@ function fallPiece(){
             piece.translate(new Point(0,fallingSpeed));        
     }else{
         piece = drawPiece(0, 0, myConfig.listOfPiece[getRandomInt(0,myConfig.listOfPiece.length)]);
-        piece = drawUpperLeftPoint(piece);
+        //piece = drawUpperLeftPoint(piece);
     }
     // Create a centered text item at the center of the view:
     //text.content='lines completed : '+linesCompleted+'\nposition:'+(piece!==undefined?piece.position.y:"undefined")+ "\nbottomPosition:"+(piece!==undefined?piece.bottomLeft.y:"undefined");
-    text.content='lines completed : '+linesCompleted+'\nfallingSpeed='+fallingSpeed+'\npositionX:'+(piece!==undefined?piece.position.x:"undefined") +'\npositionY:'+(piece!==undefined?piece.position.y:"undefined" );
+    text.content='lines completed : '+linesCompleted+'\nfallingSpeed='+fallingSpeed+'\npositionX:'+(piece!==undefined?piece.position.x:"undefined") +'\npositionY:'+(piece!==undefined?piece.position.y:"undefined")+'\npositionX:'+(piece!==undefined?getUpperLeftX(piece):"undefined") +'\npositionY:'+(piece!==undefined?getUpperLeftY(piece):"undefined" );
 }
 
 function move(direction){
