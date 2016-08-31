@@ -72,9 +72,12 @@ function getUpperRightY(piece) {
 
 
 function drawUpperLeftPoint(piece){
-    var upperLeft = new Path.Circle(new Point(getUpperLeftX(piece),getUpperLeftY(piece)), 5);
-    upperLeft.fillColor = 'red';
-    piece.children.push(upperLeft);
+    if(piece!==undefined){
+        var upperLeft = new Path.Circle(new Point(getUpperLeftX(piece),getUpperLeftY(piece)), 5);
+        upperLeft.fillColor = 'red';
+        piece.children.push(upperLeft);
+    }
+    return piece;
 }
 
 
