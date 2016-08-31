@@ -114,7 +114,7 @@ function drawPiece(x, y, pieceConfig) {
     var piece = new Group({
         children: arrayOfBlock
     });
-    //piece.pivot=new Point(pieceConfig.pivotX*myConfig.sizeBlock, pieceConfig.pivotY*myConfig.sizeBlock);
+    piece.pivot=new Point(pieceConfig.pivotX*myConfig.sizeBlock, pieceConfig.pivotY*myConfig.sizeBlock);
     return piece;
 }
 
