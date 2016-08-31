@@ -48,24 +48,28 @@ function drawBlock(x, y, colorIdx) {
 
 function getUpperLeftX(piece) {
     var x = Math.min.apply(Math, [ piece.bounds.topLeft.x, piece.bounds.topRight.x, piece.bounds.bottomLeft.x, piece.bounds.bottomRight.x ]) ;
+    x=Math.round(x);
     console.log("getUpperLeftX="+x);
     return x;
 }
 
 function getUpperLeftY(piece) {
     var y=  Math.min.apply(Math, [ piece.bounds.topLeft.y, piece.bounds.topRight.y, piece.bounds.bottomLeft.y, piece.bounds.bottomRight.y ]) ;
+    x=Math.round(y);
     console.log("getUpperLeftY="+y);
     return y;
 }
 
 function getUpperRightX(piece) {
     var x=Math.max.apply(Math, [ piece.bounds.topLeft.x, piece.bounds.topRight.x, piece.bounds.bottomLeft.x, piece.bounds.bottomRight.x ]) ;
+    x=Math.round(x);
     console.log("getUpperRightX="+x);
     return x;
 }
 
 function getUpperRightY(piece) {
     var y=Math.max.apply(Math, [ piece.bounds.topLeft.y, piece.bounds.topRight.y, piece.bounds.bottomLeft.y, piece.bounds.bottomRight.y ]) ;
+    x=Math.round(y);
     console.log("getUpperRightY="+y);
     return y;
 }
@@ -134,6 +138,7 @@ function fallPiece(){
     //console.log("fallPiece");
     if(piece!==undefined){
         bottomPointY = Math.max.apply(Math, [ piece.bounds.bottomLeft.y, piece.bounds.bottomRight.y, piece.bounds.topLeft.y, piece.bounds.topRight.y ]) ;
+        bottomPointY=Math.round(bottomPointY);
     }
     if((piece!==undefined)&&( bottomPointY <myConfig.gridHeight)){
             piece.translate(new Point(0,fallingSpeed));        
@@ -149,7 +154,7 @@ function fallPiece(){
 function move(direction){
     console.log("move "+direction);
     if(direction==="left"){
-        if(getUpperLeftX(piece)>myConfig.sizeBlock){
+        if(getUpperLeftX(piece)>=myConfig.sizeBlock){
             piece.translate(new Point(-myConfig.sizeBlock,0));
         }
     }
