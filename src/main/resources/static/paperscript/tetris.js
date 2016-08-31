@@ -61,7 +61,7 @@ function getUpperLeftY(piece) {
 function getUpperRightX(piece) {
     var x=Math.max.apply(Math, [ piece.bounds.topLeft.x, piece.bounds.topRight.x, piece.bounds.bottomLeft.x, piece.bounds.bottomRight.x ]) ;
     console.log("getUpperRightX="+x);
-    return y;
+    return x;
 }
 
 function getUpperRightY(piece) {
@@ -131,7 +131,7 @@ var text = new PointText({
 
 var bottomPointY;
 function fallPiece(){
-     console.log("fallPiece");
+    //console.log("fallPiece");
     if(piece!==undefined){
         bottomPointY = Math.max.apply(Math, [ piece.bounds.bottomLeft.y, piece.bounds.bottomRight.y, piece.bounds.topLeft.y, piece.bounds.topRight.y ]) ;
     }
@@ -147,6 +147,7 @@ function fallPiece(){
 }
 
 function move(direction){
+    console.log("move "+direction);
     if(direction==="left"){
         if(getUpperLeftX(piece)>myConfig.sizeBlock){
             piece.translate(new Point(-myConfig.sizeBlock,0));
